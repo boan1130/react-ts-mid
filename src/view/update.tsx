@@ -4,6 +4,7 @@ import { api } from '../enum/api';
 import { asyncGet, asyncPut } from '../utils/fetch';
 
 interface FormState {
+    id:string,
     userName: string;
     sid: string;
     name: string;
@@ -14,6 +15,7 @@ interface FormState {
 }
 
 const initialState: FormState = {
+    id:'',
     userName: '',
     sid: '',
     name: '',
@@ -35,16 +37,17 @@ const Update = () => {
             
             try {
                 setLoading(true);
-                console.log('Fetching student with ID:', id);  // 調試日誌
+                console.log('Fetching student with ID:', id);
                 const response = await asyncGet(`${api.findAll}`);
-                console.log('API Response:', response);  // 調試日誌
+                console.log('API Response:', response);
                 
                 if (response.code === 200 && Array.isArray(response.body)) {
-                    const student = response.body.find(s => s.userName === id);
-                    console.log('Found student:', student);  // 調試日誌
+                    const student = response.body.find(s => s._id === id);
+                    console.log('Found student:', student);
                     
                     if (student) {
                         setFormData({
+                            id:student._id as string,
                             userName: student.userName,
                             sid: student.sid,
                             name: student.name,
@@ -54,12 +57,12 @@ const Update = () => {
                             Email: student.Email
                         });
                     } else {
-                        console.log('Student not found');  // 調試日誌
+                        console.log('Student not found');
                         alert('找不到學生資料');
                         navigate('/all');
                     }
                 } else {
-                    console.log('Invalid response format:', response);  // 調試日誌
+                    console.log('Invalid response format:', response);
                     alert('讀取資料失敗');
                     navigate('/all');
                 }
@@ -76,13 +79,12 @@ const Update = () => {
     }, [id, navigate]);
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
         if (!id) return;
 
         try {
-            console.log('Updating student:', formData);  // 調試日誌
+            console.log('Updating student:', formData);
             const response = await asyncPut(`${api.updateStudent}?id=${id}`, formData);
-            console.log('Update response:', response);  // 調試日誌
+            console.log('Update response:', response);
             
             if (response.code === 200) {
                 alert('更新成功！');
