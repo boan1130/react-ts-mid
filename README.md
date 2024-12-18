@@ -1,119 +1,86 @@
 StudentHub Frontend
 專案簡介
-這是一個使用 React + TypeScript 開發的學生資料管理系統前端專案，提供直覺的使用者介面和完整的 CRUD 操作功能。
-設計概念
+這是一個使用 React + TypeScript + Vite 開發的學生資料管理系統前端專案，提供直覺的使用者介面和完整的 CRUD 操作功能。
 
-響應式設計：確保在不同裝置上都能有良好的瀏覽體驗
-模組化開發：組件化設計，提高代碼複用性
-直覺操作：清晰的導航和操作流程
-即時反饋：操作狀態的及時顯示
+系統架構圖
+graph TD
+    A[頁面組件] -->|使用| B[UI 組件]
+    A -->|調用| C[API 服務]
+    C -->|使用| D[Fetch 工具]
+    E[路由] -->|管理| A
 
-技術選用
-
-核心框架：
-
-React 18
-TypeScript
-Vite 建置工具
-
-
-樣式設計：
-
-Tailwind CSS
-客製化組件
-
-
-
-功能規劃
-
-1.學生管理
-
-新增學生資料
-學生列表顯示
-更新學生資訊
-刪除學生記錄
-
-
-2.介面特色
-
-表單驗證
-操作提示
-資料篩選
-響應式設計
-
-專案結構
-src/
+    專案結構
+    src/
 ├── assets/           # 靜態資源
-│   └── react.svg
 ├── components/ui/    # UI 元件
 │   ├── button.tsx
 │   ├── card.tsx
 │   └── select.tsx
 ├── enum/            # 列舉定義
-│   └── api.ts
+│   └── api.ts      # API 端點定義
 ├── interface/       # 介面定義
 │   ├── resp.ts
 │   └── Student.ts
 ├── router/          # 路由配置
 │   └── router.tsx
 ├── style/           # CSS 樣式
+│   ├── App.css
+│   └── index.css
 ├── utils/           # 工具函數
+│   └── fetch.ts
 └── view/            # 頁面元件
-    ├── all.tsx
-    ├── home.tsx
-    ├── insert.tsx
-    └── update.tsx
+    ├── all.tsx     # 學生列表
+    ├── App.tsx     # 主應用
+    ├── home.tsx    # 首頁
+    ├── insert.tsx  # 新增學生
+    └── update.tsx  # 更新學生
 
-    安裝與執行
+    API 使用
+    // API 端點定義
+export enum api {
+    findAll = "http://127.0.0.1:2083/api/v1/user/findAll",
+    getStudent = "http://127.0.0.1:2083/api/v1/user/getStudent",
+    insertOne = "http://127.0.0.1:2083/api/v1/user/insertOne",
+    updateStudent = "http://127.0.0.1:2083/api/v1/user/updateNameById",
+    deleteStudent = "http://127.0.0.1:2083/api/v1/user/deleteById"
+}
 
-1.環境要求
+功能頁面
+1. 首頁 (home.tsx)
+
+系統導航
+歡迎訊息
+
+2. 學生列表 (all.tsx)
+
+顯示所有學生
+提供編輯和刪除操作
+
+3. 新增學生 (insert.tsx)
+
+學生資料表單
+表單驗證
+
+4. 更新學生 (update.tsx)
+
+修改學生資料
+即時更新顯示
+
+安裝與執行
+環境需求
+
 Node.js 14.x+
 npm 或 yarn
 
-2.安裝步驟
-# 安裝依賴
-npm install
+安裝步驟
+1.安裝依賴:npm install
+2.設定環境變數 創建 .env 檔案:VITE_API_URL=http://127.0.0.1:2083
+3.啟動開發服務器:npm run dev
+4.建置生產版本:npm run build
 
-# 設定環境變數
-# 創建 .env 檔案
-VITE_API_URL=後端API網址
-
-# 啟動開發服務器
-npm run dev
-
-# 建置生產版本
-npm run build
-
-開發心得
-在開發過程中，特別注意了以下幾點：
-
-TypeScript 的型別定義和檢查
-React 組件的最佳實踐
-前後端串接的處理方式
-使用者體驗的優化
-
-未來展望
-
-1.功能擴充
-
-進階搜尋功能
-資料匯出功能
-批量處理功能
-
-
-2.效能優化
-
-程式碼分割
-圖片優化
-快取策略
-
-
-參考資源
-
-React 官方文件
-TypeScript 手冊
-Tailwind CSS 文件
-Vite 官方指南
-
-
-
+技術棧
+1.React 18
+2.TypeScript
+3.Vite
+4.Tailwind CSS
+5.React Router v6
